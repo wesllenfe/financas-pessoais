@@ -1,0 +1,281 @@
+:host {
+  --card-height: 100px;
+  --summary-card-height: 120px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 12px;
+  margin: 0 12px 16px;
+
+  ion-card {
+    flex: 1;
+    margin: 0;
+    height: var(--summary-card-height);
+
+    ion-card-header {
+      padding: 12px 16px 0;
+
+      ion-card-title {
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+
+    ion-card-content {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: calc(var(--summary-card-height) - 50px);
+
+      h2 {
+        font-size: 20px;
+        font-weight: 700;
+        margin: 0;
+      }
+    }
+  }
+}
+
+.balance-card {
+  margin: 12px;
+
+  ion-card-header {
+    padding-bottom: 0;
+  }
+
+  ion-card-content {
+    padding-top: 8px;
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin: 8px 0;
+      text-align: center;
+    }
+  }
+}
+
+.chart-card {
+  margin: 12px;
+
+  ion-card-header {
+    padding-bottom: 8px;
+  }
+
+  ion-card-content {
+    padding-top: 0;
+  }
+}
+
+.action-button {
+  margin: 16px 12px;
+}
+
+ion-fab-button {
+  --box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.4);
+}
+
+/* Animações */
+.balance-card {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+.summary-cards {
+  animation: fadeIn 0.6s ease forwards;
+}
+
+.chart-card:nth-of-type(1) {
+  animation: fadeIn 0.7s ease forwards;
+}
+
+.chart-card:nth-of-type(2) {
+  animation: fadeIn 0.8s ease forwards;
+}
+
+.action-button {
+  animation: fadeIn 0.9s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.app-title {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+}
+
+.title-icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.theme-button {
+  --border-radius: 50%;
+  --padding-start: 10px;
+  --padding-end: 10px;
+  height: 40px;
+  width: 40px;
+}
+
+.balance-card {
+  margin: 20px 16px 16px;
+  padding: 10px;
+  border-radius: 20px;
+}
+
+.balance-label {
+  font-size: 14px;
+  color: var(--app-text-light);
+  text-align: center;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+h1 {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+  margin: 10px 0;
+  letter-spacing: -0.03em;
+}
+
+.trend-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ion-color-success);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.trend-indicator ion-icon {
+  margin-right: 4px;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 12px;
+  margin: 0 16px 16px;
+}
+
+.summary-cards ion-card {
+  flex: 1;
+  margin: 0;
+  border-radius: 16px;
+}
+
+.summary-cards ion-card-content {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+}
+
+.summary-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  margin-right: 12px;
+}
+
+.summary-icon.income {
+  background-color: rgba(var(--ion-color-success-rgb), 0.1);
+  color: var(--ion-color-success);
+}
+
+.summary-icon.expense {
+  background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+  color: var(--ion-color-danger);
+}
+
+.summary-icon ion-icon {
+  font-size: 24px;
+}
+
+.summary-info {
+  flex: 1;
+}
+
+.summary-label {
+  font-size: 13px;
+  color: var(--app-text-light);
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.summary-info h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: -0.02em;
+}
+
+.chart-grid {
+  padding: 0;
+}
+
+.chart-card {
+  margin: 0 16px 16px;
+}
+
+.chart-card ion-card-title {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+}
+
+.chart-card ion-card-title ion-icon {
+  margin-right: 8px;
+  font-size: 18px;
+  color: var(--ion-color-primary);
+}
+
+.action-buttons {
+  margin-bottom: 16px;
+}
+
+.view-all-button {
+  --background: var(--ion-color-primary);
+  --color: white;
+  font-weight: 600;
+}
+
+ion-fab-button {
+  --background: var(--ion-color-primary);
+}
+
+/* Animações */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.balance-card {
+  animation: fadeInUp 0.5s ease forwards;
+}
+
+.summary-cards ion-card:nth-child(1) {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.summary-cards ion-card:nth-child(2) {
+  animation: fadeInUp 0.7s ease forwards;
+}
+
+.chart-card:nth-child(1) {
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.chart-card:nth-child(2) {
+  animation: fadeInUp 0.9s ease forwards;
+}
+
+.action-buttons {
+  animation: fadeInUp 1s ease forwards;
+}

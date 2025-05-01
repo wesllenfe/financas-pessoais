@@ -1,37 +1,401 @@
 /*
  * App Global CSS
  * ----------------------------------------------------------------------------
- * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
- * used as an entry point to import other CSS/Sass files to be included in the
- * output CSS.
- * For more information on global stylesheets, visit the documentation:
- * https://ionicframework.com/docs/layout/global-stylesheets
+ * Estilos globais para toda a aplicação
  */
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
-
-/* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
 @import "@ionic/angular/css/display.css";
-
-/* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
+/* Importando fontes Google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+/* Variáveis personalizadas */
+:root {
+  /* Paleta de cores principal - Tons de azul e verde */
+  --ion-color-primary: #4F46E5;
+  --ion-color-primary-rgb: 79, 70, 229;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #3F38B8;
+  --ion-color-primary-tint: #6159E8;
+
+  /* Cores de sucesso (entradas) */
+  --ion-color-success: #10B981;
+  --ion-color-success-rgb: 16, 185, 129;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #0E9A6C;
+  --ion-color-success-tint: #34D399;
+
+  /* Cores de perigo (saídas) */
+  --ion-color-danger: #EF4444;
+  --ion-color-danger-rgb: 239, 68, 68;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #DC2626;
+  --ion-color-danger-tint: #F87171;
+
+  /* Cores neutras */
+  --ion-color-light: #F9FAFB;
+  --ion-color-light-rgb: 249, 250, 251;
+  --ion-color-medium: #6B7280;
+  --ion-color-dark: #111827;
+
+  /* Variáveis de design */
+  --app-border-radius: 16px;
+  --app-card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+  --app-transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --app-font-family: 'Poppins', sans-serif;
+
+  /* Cores de fundo e texto */
+  --app-background: #F9FAFB;
+  --app-card-background: #FFFFFF;
+  --app-text-color: #111827;
+  --app-text-light: #6B7280;
+  --app-border-color: #E5E7EB;
+}
+
+/* Modo escuro */
+.dark {
+  --ion-background-color: #111827;
+  --ion-background-color-rgb: 17, 24, 39;
+  --ion-text-color: #F9FAFB;
+  --ion-text-color-rgb: 249, 250, 251;
+  --ion-border-color: #374151;
+
+  --ion-card-background: #1F2937;
+  --ion-item-background: #1F2937;
+
+  /* Variáveis de design para modo escuro */
+  --app-card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+  /* Cores de fundo e texto para modo escuro */
+  --app-background: #111827;
+  --app-card-background: #1F2937;
+  --app-text-color: #F9FAFB;
+  --app-text-light: #9CA3AF;
+  --app-border-color: #374151;
+}
+
+/* Estilos globais */
+body {
+  font-family: var(--app-font-family);
+  background-color: var(--app-background);
+  color: var(--app-text-color);
+}
+
+ion-content {
+  --background: var(--app-background);
+}
+
+/* Headers */
+ion-header.ion-no-border {
+  box-shadow: none;
+}
+
+ion-toolbar {
+  --background: var(--app-background);
+  --min-height: 60px;
+}
+
+ion-title {
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+/* Cards */
+ion-card {
+  border-radius: var(--app-border-radius);
+  box-shadow: var(--app-card-shadow);
+  margin: 16px;
+  overflow: hidden;
+  transition: var(--app-transition);
+  background: var(--app-card-background);
+}
+
+ion-card-header {
+  padding: 20px 20px 10px;
+}
+
+ion-card-title {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--app-text-color);
+}
+
+ion-card-content {
+  padding: 10px 20px 20px;
+}
+
+/* Botões */
+ion-button {
+  --border-radius: 12px;
+  --box-shadow: 0 4px 6px -1px rgba(var(--ion-color-primary-rgb), 0.2), 0 2px 4px -1px rgba(var(--ion-color-primary-rgb), 0.1);
+  font-weight: 600;
+  height: 48px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  margin: 8px 0;
+}
+
+/* Listas */
+ion-list {
+  background: transparent;
+  padding: 8px;
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --border-radius: 12px;
+  margin-bottom: 8px;
+  --background: var(--app-card-background);
+  --border-color: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* Cores para valores */
+.positive {
+  color: var(--ion-color-success);
+  font-weight: 600;
+}
+
+.negative {
+  color: var(--ion-color-danger);
+  font-weight: 600;
+}
+
+/* Estilos para o gráfico */
+.chart-container {
+  height: 250px;
+  width: 100%;
+  position: relative;
+  padding: 10px;
+}
+
+.no-data {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: var(--app-text-light);
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Estilos para o dashboard */
+.summary-cards {
+  display: flex;
+  gap: 12px;
+  margin: 0 16px 16px;
+}
+
+.summary-cards ion-card {
+  flex: 1;
+  margin: 0;
+  padding: 5px;
+}
+
+.summary-cards h2 {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 5px 0;
+  letter-spacing: -0.02em;
+}
+
+.balance-card h1 {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 10px 0;
+  text-align: center;
+  letter-spacing: -0.03em;
+}
+
+/* Estilos para transações */
+ion-searchbar {
+  padding: 10px 16px;
+  --border-radius: 12px;
+  --box-shadow: none;
+  --background: rgba(var(--ion-color-primary-rgb), 0.05);
+  --placeholder-color: var(--app-text-light);
+  --placeholder-opacity: 0.8;
+  --icon-color: var(--ion-color-primary);
+}
+
+ion-segment {
+  padding: 0 16px 8px;
+}
+
+ion-segment-button {
+  --border-radius: 10px;
+  --background-checked: rgba(var(--ion-color-primary-rgb), 0.1);
+  --color-checked: var(--ion-color-primary);
+  --indicator-color: var(--ion-color-primary);
+  min-height: 40px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  text-transform: none;
+}
+
+/* Formulários */
+.form-group {
+  margin-bottom: 20px;
+}
+
+ion-label {
+  color: var(--app-text-color);
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.custom-input, .custom-select {
+  --background: var(--app-card-background);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  --border-radius: 12px;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--app-border-color);
+  --highlight-color-focused: var(--ion-color-primary);
+  margin-top: 4px;
+  font-size: 16px;
+}
+
+.custom-date-button {
+  width: 100%;
+  --background: var(--app-card-background);
+  --border-radius: 12px;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--app-border-color);
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 16px;
+}
+
+/* Animações e transições */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+ion-card, ion-item {
+  animation: fadeIn 0.3s ease forwards;
+}
+
+/* Toast personalizado */
+.toast-success {
+  --background: var(--ion-color-success);
+  --color: var(--ion-color-success-contrast);
+  --border-radius: 12px;
+  font-weight: 500;
+}
+
+.toast-error {
+  --background: var(--ion-color-danger);
+  --color: var(--ion-color-danger-contrast);
+  --border-radius: 12px;
+  font-weight: 500;
+}
+
+/* FAB Button */
+ion-fab-button {
+  --border-radius: 16px;
+  --box-shadow: 0 10px 15px -3px rgba(var(--ion-color-primary-rgb), 0.3), 0 4px 6px -2px rgba(var(--ion-color-primary-rgb), 0.1);
+}
+
+/* Alertas personalizados */
+.custom-alert {
+  --backdrop-opacity: 0.6;
+}
+
+.custom-alert .alert-wrapper {
+  border-radius: 16px;
+}
+
+/* Skeleton */
+ion-skeleton-text {
+  --border-radius: 8px;
+  --background: rgba(var(--ion-color-primary-rgb), 0.08);
+}
+
+/* Segmentos personalizados */
+.segment-container {
+  display: flex;
+  background: var(--app-card-background);
+  border-radius: 12px;
+  border: 1px solid var(--app-border-color);
+  overflow: hidden;
+}
+
+.segment-button {
+  flex: 1;
+  text-align: center;
+  padding: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.segment-button.active {
+  background-color: var(--ion-color-primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* Estilos para o modo escuro */
+.dark ion-searchbar {
+  --background: rgba(255, 255, 255, 0.05);
+}
+
+.dark ion-skeleton-text {
+  --background: rgba(255, 255, 255, 0.08);
+}
+
+/* Estilos para inputs no modo escuro */
+.dark .custom-input,
+.dark .custom-select,
+.dark .custom-date-button,
+.dark .segment-container {
+  --background: #1F2937;
+  --border-color: #374151;
+  color: var(--app-text-color);
+}
+
+.dark .segment-button {
+  background: #1F2937;
+  color: #D1D5DB;
+}
+
+/* Glassmorphism para cards especiais */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-card {
+  background: rgba(31, 41, 55, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}

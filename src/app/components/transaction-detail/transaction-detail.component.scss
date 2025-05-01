@@ -1,0 +1,73 @@
+:host {
+  --detail-padding: 16px;
+}
+
+ion-header {
+  ion-toolbar {
+    --background: var(--ion-color-primary);
+    --color: var(--ion-color-primary-contrast);
+
+    ion-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    ion-button {
+      --color: var(--ion-color-primary-contrast);
+    }
+  }
+}
+
+ion-content {
+  --background: var(--app-background);
+}
+
+ion-list {
+  background: transparent;
+  padding: var(--detail-padding);
+
+  ion-item {
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --inner-padding-end: 0;
+    --background: var(--app-card-background);
+    --border-color: var(--app-border-color);
+    border-radius: 10px;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    ion-label {
+      color: var(--app-text-color);
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    ion-note {
+      font-size: 16px;
+      font-weight: 500;
+      padding: 0 8px;
+
+      &[color="success"] {
+        color: var(--ion-color-success);
+      }
+
+      &[color="danger"] {
+        color: var(--ion-color-danger);
+      }
+    }
+  }
+}
+
+/* Animações */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+ion-item {
+  animation: fadeInUp 0.3s ease forwards;
+  animation-delay: calc(var(--animation-order) * 0.05s);
+}

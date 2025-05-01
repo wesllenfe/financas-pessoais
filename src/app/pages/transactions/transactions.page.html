@@ -1,0 +1,100 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Transações</ion-title>
+  </ion-toolbar>
+
+  <div class="search-filter-container">
+    <div class="search-container">
+      <ion-searchbar
+        placeholder="Buscar transações"
+        [(ngModel)]="searchTerm"
+        (ionInput)="filterTransactions()"
+        [debounce]="500"
+        animated="true"
+        class="custom-searchbar"
+      >
+        <ion-icon slot="start" name="search-outline"></ion-icon>
+      </ion-searchbar>
+    </div>
+
+    <div class="filter-container">
+      <ion-segment [(ngModel)]="selectedFilter" (ionChange)="filterTransactions()" mode="ios" class="custom-segment">
+        <ion-segment-button value="all">
+          <ion-label>Todas</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="income">
+          <ion-label>Entradas</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="expense">
+          <ion-label>Saídas</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-card class="transactions-card">
+    <ng-container *ngIf="(filteredTransactions$ | async) as transactions; else loading">
+      <ng-container *ngIf="transactions.length > 0; else noData">
+        <div class="transaction-count">
+          <ion-chip outline color="primary">
+            {{ transactions.length }} transações encontradas
+          </ion-chip>
+        </div>
+        <ion-list lines="none">
+          <app-transaction-item
+            *ngFor="let transaction of transactions"
+            [transaction]="transaction"
+            (edit)="editTransaction($event)"
+            (delete)="confirmDelete($event)"
+          ></app-transaction-item>
+        </ion-list>
+      </ng-container>
+    </ng-container>
+  </ion-card>
+
+  <ng-template #loading>
+    <ion-card class="transactions-card">
+      <div class="skeleton-container">
+        <div class="skeleton-item" *ngFor="let i of [1,2,3,4,5]">
+          <div class="skeleton-content">
+            <div class="skeleton-left">
+              <ion-skeleton-text [animated]="true" style="width: 70%"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 50%"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 30%"></ion-skeleton-text>
+            </div>
+            <div class="skeleton-right">
+              <ion-skeleton-text [animated]="true" style="width: 60px"></ion-skeleton-text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ion-card>
+  </ng-template>
+
+  <ng-template #noData>
+    <div class="no-data">
+      <ion-icon name="alert-circle-outline" size="large"></ion-icon>
+      <h3>Nenhuma transação encontrada</h3>
+      <p>Tente ajustar seus filtros ou adicione uma nova transação</p>
+      <ion-button fill="outline" size="small" (click)="resetFilters()">
+        Limpar filtros
+      </ion-button>
+    </div>
+  </ng-template>
+
+  <!-- Botão flutuante para adicionar transação -->
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button routerLink="/transaction">
+      <ion-icon name="add-outline"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>

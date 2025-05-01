@@ -1,0 +1,26 @@
+<ion-item-sliding #slidingItem>
+  <ion-item [routerLink]="['/transaction', transaction.id]" detail="false" class="transaction-item">
+    <div class="category-icon" [ngClass]="transaction.type">
+      <ion-icon [name]="getCategoryIcon(transaction.category)"></ion-icon>
+    </div>
+    <ion-label>
+      <h2>{{ transaction.description }}</h2>
+      <div class="transaction-details">
+        <ion-chip class="category-chip" size="small">{{ transaction.category }}</ion-chip>
+        <span class="transaction-date">{{ transaction.date | date:'dd/MM/yyyy' }}</span>
+      </div>
+    </ion-label>
+    <ion-note slot="end" [color]="transaction.type === 'income' ? 'success' : 'danger'" class="transaction-amount">
+      {{ transaction.type === 'income' ? '+' : '-' }}{{ transaction.amount | currency:'BRL' }}
+    </ion-note>
+  </ion-item>
+
+  <ion-item-options side="end">
+    <ion-item-option color="primary" (click)="edit.emit(transaction); slidingItem.close()">
+      <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+    </ion-item-option>
+    <ion-item-option color="danger" (click)="delete.emit(transaction.id); slidingItem.close()">
+      <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+    </ion-item-option>
+  </ion-item-options>
+</ion-item-sliding>
