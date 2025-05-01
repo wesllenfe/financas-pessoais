@@ -1,0 +1,7 @@
+{
+  "name": "financas-pessoais",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
