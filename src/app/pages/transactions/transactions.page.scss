@@ -31,6 +31,7 @@
 
 .custom-segment {
   --background: transparent;
+  padding: 0;
 }
 
 ion-searchbar {
@@ -41,7 +42,7 @@ ion-searchbar {
 }
 
 ion-segment {
-  padding: 0 12px 8px;
+  padding: 0;
 
   ion-segment-button {
     --border-radius: 8px;
@@ -55,6 +56,8 @@ ion-segment {
     font-weight: 500;
     letter-spacing: 0;
     text-transform: none;
+    margin: 0;
+    padding: 0;
   }
 }
 

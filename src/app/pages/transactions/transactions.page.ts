@@ -84,10 +84,10 @@ export class TransactionsPage implements OnInit {
     private router: Router,
   ) {
     addIcons({
-      "add-outline": addOutline,
-      "alert-circle-outline": alertCircleOutline,
-      "filter-outline": filterOutline,
-      "search-outline": searchOutline,
+      searchOutline,
+      alertCircleOutline,
+      addOutline,
+      filterOutline
     });
   }
 
