@@ -1,0 +1,139 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditing ? 'Editar' : 'Nova' }} Meta</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form *ngIf="goal" (ngSubmit)="saveGoal()" #form="ngForm">
+    <div class="form-group">
+      <ion-label position="stacked">Nome da Meta</ion-label>
+      <ion-input
+        [(ngModel)]="goal.name"
+        name="name"
+        required
+        placeholder="Ex: Viagem para Paris"
+        #nameInput="ngModel"
+        class="custom-input"
+      >
+        <ion-icon name="flag-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+      <div *ngIf="nameInput.invalid && (nameInput.dirty || nameInput.touched)" class="error-message">
+        <div *ngIf="nameInput.errors?.['required']">Nome é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Valor da Meta</ion-label>
+      <ion-input
+        [(ngModel)]="displayTargetAmount"
+        name="targetAmount"
+        required
+        placeholder="0,00"
+        #targetAmountInput="ngModel"
+        class="custom-input"
+        (ionInput)="formatCurrency($event, 'target')"
+        (ionBlur)="updateAmount('target')"
+      >
+        <ion-icon name="cash-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+      <div *ngIf="targetAmountInput.invalid && (targetAmountInput.dirty || targetAmountInput.touched)" class="error-message">
+        <div *ngIf="targetAmountInput.errors?.['required']">Valor é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Valor Atual (opcional)</ion-label>
+      <ion-input
+        [(ngModel)]="displayCurrentAmount"
+        name="currentAmount"
+        placeholder="0,00"
+        class="custom-input"
+        (ionInput)="formatCurrency($event, 'current')"
+        (ionBlur)="updateAmount('current')"
+      >
+        <ion-icon name="wallet-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Categoria</ion-label>
+      <ion-select
+        [(ngModel)]="goal.category"
+        name="category"
+        required
+        interface="action-sheet"
+        class="custom-select"
+        placeholder="Selecione uma categoria"
+      >
+        <ion-select-option *ngFor="let category of (categories$ | async)" [value]="category">
+          {{ category }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <ion-label position="stacked">Data de Início</ion-label>
+        <ion-datetime-button datetime="startDate" class="custom-date-button"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="startDate"
+              [(ngModel)]="goal.startDate"
+              name="startDate"
+              presentation="date"
+              [showDefaultButtons]="true"
+              doneText="Confirmar"
+              cancelText="Cancelar"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Data Alvo</ion-label>
+        <ion-datetime-button datetime="targetDate" class="custom-date-button"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="targetDate"
+              [(ngModel)]="goal.targetDate"
+              name="targetDate"
+              presentation="date"
+              [showDefaultButtons]="true"
+              doneText="Confirmar"
+              cancelText="Cancelar"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Observações (opcional)</ion-label>
+      <ion-textarea
+        [(ngModel)]="goal.notes"
+        name="notes"
+        placeholder="Adicione observações sobre sua meta"
+        class="custom-textarea"
+        rows="3"
+      ></ion-textarea>
+    </div>
+
+    <div class="button-group">
+      <ion-button expand="block" type="submit" [disabled]="form.invalid">
+        {{ isEditing ? 'Atualizar' : 'Salvar' }}
+      </ion-button>
+
+      <ion-button *ngIf="isEditing" expand="block" color="danger" type="button" (click)="confirmDelete()">
+        Excluir
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

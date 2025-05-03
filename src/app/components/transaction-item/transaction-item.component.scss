@@ -1,12 +1,15 @@
+/* Corrigir alinhamento de ícones e melhorar responsividade */
 :host {
   display: block;
   margin-bottom: 8px;
 }
 
+/* Modificar o estilo do ion-item-sliding para garantir que os botões apareçam corretamente */
 ion-item-sliding {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--app-card-shadow);
+  margin-bottom: 8px;
 
   ion-item {
     --padding-start: 16px;
@@ -21,12 +24,20 @@ ion-item-sliding {
         font-weight: 500;
         color: var(--app-text-color);
         margin-bottom: 4px;
+
+        @media (max-width: 360px) {
+          font-size: 14px;
+        }
       }
 
       p {
         font-size: 14px;
         color: var(--app-text-light);
         margin: 2px 0;
+
+        @media (max-width: 360px) {
+          font-size: 12px;
+        }
       }
     }
 
@@ -42,12 +53,22 @@ ion-item-sliding {
       &[color="danger"] {
         color: var(--ion-color-danger);
       }
+
+      @media (max-width: 360px) {
+        font-size: 14px;
+        padding: 0 4px;
+      }
     }
   }
 
   ion-item-options {
     ion-item-option {
       --border-radius: 0;
+      min-width: 70px;
+
+      @media (max-width: 360px) {
+        min-width: 60px;
+      }
 
       &[color="primary"] {
         --background: var(--ion-color-primary);
@@ -61,11 +82,27 @@ ion-item-sliding {
 
       ion-icon {
         font-size: 20px;
+
+        @media (max-width: 360px) {
+          font-size: 18px;
+        }
       }
     }
   }
 }
 
+/* Garantir que o item deslizante tenha um z-index adequado */
+ion-item-sliding.item-sliding-active-slide {
+  z-index: 10;
+  position: relative;
+}
+
+/* Garantir que as opções de item tenham um z-index maior */
+ion-item-options {
+  z-index: 11;
+}
+
+/* Resto do CSS permanece o mesmo */
 .transaction-item {
   --padding-start: 16px;
   --padding-end: 16px;
@@ -86,6 +123,12 @@ ion-item-sliding {
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
   color: var(--ion-color-primary);
 
+  @media (max-width: 360px) {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+  }
+
   &.income {
     background-color: rgba(var(--ion-color-success-rgb), 0.1);
     color: var(--ion-color-success);
@@ -98,6 +141,10 @@ ion-item-sliding {
 
   ion-icon {
     font-size: 20px;
+
+    @media (max-width: 360px) {
+      font-size: 16px;
+    }
   }
 }
 
@@ -109,11 +156,17 @@ ion-label h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 360px) {
+    font-size: 14px;
+    margin-bottom: 4px;
+  }
 }
 
 .transaction-details {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .category-chip {
@@ -123,17 +176,32 @@ ion-label h2 {
   margin: 0 8px 0 0;
   --background: rgba(var(--ion-color-primary-rgb), 0.1);
   --color: var(--ion-color-primary);
+
+  @media (max-width: 360px) {
+    height: 18px;
+    font-size: 10px;
+    padding: 0 6px;
+    margin: 0 6px 0 0;
+  }
 }
 
 .transaction-date {
   font-size: 12px;
   color: var(--app-text-light);
+
+  @media (max-width: 360px) {
+    font-size: 11px;
+  }
 }
 
 .transaction-amount {
   font-size: 16px;
   font-weight: 700;
   white-space: nowrap;
+
+  @media (max-width: 360px) {
+    font-size: 14px;
+  }
 }
 
 ion-item-options {
@@ -143,6 +211,11 @@ ion-item-options {
 ion-item-option {
   --padding-start: 16px;
   --padding-end: 16px;
+
+  @media (max-width: 360px) {
+    --padding-start: 12px;
+    --padding-end: 12px;
+  }
 }
 
 /* Animação ao deslizar */

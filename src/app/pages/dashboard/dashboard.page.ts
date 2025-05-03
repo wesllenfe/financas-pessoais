@@ -97,6 +97,10 @@ export class DashboardPage implements OnInit {
       "trending-up-outline": trendingUpOutline,
       "pie-chart-outline": trendingUpOutline,
       "list-outline": trendingUpOutline,
+      "calculator-outline": trendingUpOutline,
+      "flag-outline": trendingUpOutline,
+      "repeat-outline": trendingUpOutline,
+      "bar-chart-outline": trendingUpOutline,
     })
   }
 

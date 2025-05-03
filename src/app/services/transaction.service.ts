@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core"
-import { BehaviorSubject, type Observable, map } from "rxjs"
+import { BehaviorSubject, Observable, map } from "rxjs"
 import { StorageService } from "./storage.service"
 import { Transaction, TransactionSummary, CategorySummary } from "../models/transaction.model"
 import { v4 as uuidv4 } from "uuid"
@@ -141,5 +141,33 @@ export class TransactionService {
       const updatedCategories = [...this._categories.value, category]
       this._categories.next(updatedCategories)
     }
+  }
+
+  // Adicionar este método ao TransactionService para suportar filtros avançados
+  async getFilteredTransactionsPromise(filter: any): Promise<Transaction[]> {
+    const transactions = this._transactions.value
+
+    return transactions.filter((t) => {
+      // Filtrar por data
+      if (filter.startDate && new Date(t.date) < new Date(filter.startDate)) {
+        return false
+      }
+
+      if (filter.endDate && new Date(t.date) > new Date(filter.endDate)) {
+        return false
+      }
+
+      // Filtrar por categorias
+      if (filter.categories && filter.categories.length > 0 && !filter.categories.includes(t.category)) {
+        return false
+      }
+
+      // Filtrar por tipo
+      if (filter.types && filter.types.length > 0 && !filter.types.includes(t.type)) {
+        return false
+      }
+
+      return true
+    })
   }
 }

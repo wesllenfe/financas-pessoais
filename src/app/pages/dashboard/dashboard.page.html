@@ -107,6 +107,49 @@
     </ion-button>
   </div>
 
+  <!-- Adicionar após o botão "Ver Todas as Transações" -->
+  <div class="features-grid">
+    <ion-card class="feature-card" routerLink="/budgets">
+      <ion-card-content>
+        <div class="feature-icon">
+          <ion-icon name="calculator-outline"></ion-icon>
+        </div>
+        <div class="feature-title">Orçamentos</div>
+        <div class="feature-description">Defina limites por categoria</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="feature-card" routerLink="/goals">
+      <ion-card-content>
+        <div class="feature-icon">
+          <ion-icon name="flag-outline"></ion-icon>
+        </div>
+        <div class="feature-title">Metas</div>
+        <div class="feature-description">Planeje suas economias</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="feature-card" routerLink="/recurring">
+      <ion-card-content>
+        <div class="feature-icon">
+          <ion-icon name="repeat-outline"></ion-icon>
+        </div>
+        <div class="feature-title">Recorrentes</div>
+        <div class="feature-description">Automatize transações</div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card class="feature-card" routerLink="/reports">
+      <ion-card-content>
+        <div class="feature-icon">
+          <ion-icon name="bar-chart-outline"></ion-icon>
+        </div>
+        <div class="feature-title">Relatórios</div>
+        <div class="feature-description">Analise suas finanças</div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
   <!-- Botão flutuante para adicionar transação -->
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button routerLink="/transaction">

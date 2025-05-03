@@ -1,0 +1,166 @@
+.recurring-list {
+  padding: 16px;
+}
+
+.recurring-card {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  box-shadow: var(--app-card-shadow);
+  overflow: hidden;
+}
+
+.recurring-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.category-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 12px;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  color: var(--ion-color-primary);
+
+  &.income {
+    background-color: rgba(var(--ion-color-success-rgb), 0.1);
+    color: var(--ion-color-success);
+  }
+
+  &.expense {
+    background-color: rgba(var(--ion-color-danger-rgb), 0.1);
+    color: var(--ion-color-danger);
+  }
+
+  ion-icon {
+    font-size: 20px;
+  }
+}
+
+.recurring-info {
+  flex: 1;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--app-text-color);
+  }
+
+  .recurring-details {
+    display: flex;
+    align-items: center;
+  }
+}
+
+.category-chip {
+  height: 20px;
+  font-size: 11px;
+  padding: 0 8px;
+  margin: 0 8px 0 0;
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  --color: var(--ion-color-primary);
+}
+
+.recurring-frequency {
+  font-size: 12px;
+  color: var(--app-text-light);
+}
+
+.recurring-amount {
+  font-size: 16px;
+  font-weight: 700;
+  white-space: nowrap;
+
+  &.income {
+    color: var(--ion-color-success);
+  }
+
+  &.expense {
+    color: var(--ion-color-danger);
+  }
+}
+
+.recurring-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--app-border-color);
+}
+
+.recurring-dates {
+  display: flex;
+  gap: 12px;
+}
+
+.date-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.date-label {
+  font-size: 11px;
+  color: var(--app-text-light);
+  margin-bottom: 2px;
+}
+
+.date-value {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--app-text-color);
+}
+
+.status-toggle {
+  --track-background: rgba(var(--ion-color-medium-rgb), 0.2);
+  --track-background-checked: rgba(var(--ion-color-success-rgb), 0.2);
+  --handle-background: var(--ion-color-medium);
+  --handle-background-checked: var(--ion-color-success);
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 48px;
+    color: var(--app-text-light);
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    color: var(--app-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: var(--app-text-light);
+    font-size: 14px;
+    margin: 0 0 16px;
+  }
+}
+
+.skeleton-container {
+  padding: 0 16px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.recurring-card {
+  animation: fadeIn 0.3s ease forwards;
+  animation-delay: calc(var(--animation-order) * 0.05s);
+}

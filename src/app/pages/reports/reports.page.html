@@ -1,0 +1,171 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Relatórios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Filtros -->
+  <ion-card class="filter-card">
+    <ion-card-content>
+      <div class="form-row">
+        <div class="form-group">
+          <ion-label position="stacked">Data Inicial</ion-label>
+          <ion-datetime-button datetime="startDate" class="custom-date-button"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="startDate"
+                [(ngModel)]="filter.startDate"
+                presentation="date"
+                [showDefaultButtons]="true"
+                doneText="Confirmar"
+                cancelText="Cancelar"
+                (ionChange)="loadReportData()"
+              ></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </div>
+
+        <div class="form-group">
+          <ion-label position="stacked">Data Final</ion-label>
+          <ion-datetime-button datetime="endDate" class="custom-date-button"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime
+                id="endDate"
+                [(ngModel)]="filter.endDate"
+                presentation="date"
+                [showDefaultButtons]="true"
+                doneText="Confirmar"
+                cancelText="Cancelar"
+                (ionChange)="loadReportData()"
+              ></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Categorias (opcional)</ion-label>
+        <ion-select
+          [(ngModel)]="filter.categories"
+          multiple="true"
+          interface="action-sheet"
+          class="custom-select"
+          placeholder="Todas as categorias"
+          (ionChange)="loadReportData()"
+        >
+          <ion-select-option *ngFor="let category of (categories$ | async)" [value]="category">
+            {{ category }}
+          </ion-select-option>
+        </ion-select>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Tipo de Transação</ion-label>
+        <ion-segment [(ngModel)]="filter.filterType" (ionChange)="loadReportData()">
+          <ion-segment-button value="all">
+            <ion-label>Todas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="income">
+            <ion-label>Entradas</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="expense">
+            <ion-label>Saídas</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <div class="export-buttons">
+        <ion-button expand="block" (click)="exportToPDF()">
+          <ion-icon name="document-outline" slot="start"></ion-icon>
+          Exportar para PDF
+        </ion-button>
+        <ion-button expand="block" (click)="exportToCSV()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          Exportar para CSV
+        </ion-button>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Resumo -->
+  <ion-card class="summary-card">
+    <ion-card-header>
+      <ion-card-title>Resumo do Período</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="summary-grid">
+        <div class="summary-item">
+          <div class="summary-label">Entradas</div>
+          <div class="summary-value income">{{ summary.income | currency:'BRL' }}</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Saídas</div>
+          <div class="summary-value expense">{{ summary.expense | currency:'BRL' }}</div>
+        </div>
+        <div class="summary-item">
+          <div class="summary-label">Saldo</div>
+          <div class="summary-value" [ngClass]="{'income': summary.balance >= 0, 'expense': summary.balance < 0}">
+            {{ summary.balance | currency:'BRL' }}
+          </div>
+        </div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Gráfico de Tendências -->
+  <ion-card class="chart-card">
+    <ion-card-header>
+      <ion-card-title>Tendências Mensais</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="chart-container">
+        <canvas #trendChart></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Gráfico de Categorias -->
+  <ion-card class="chart-card">
+    <ion-card-header>
+      <ion-card-title>Despesas por Categoria</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="chart-container">
+        <canvas #categoryChart></canvas>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Médias e Estatísticas -->
+  <ion-card class="stats-card">
+    <ion-card-header>
+      <ion-card-title>Estatísticas</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="stats-item">
+        <div class="stats-label">Média Diária de Gastos</div>
+        <div class="stats-value expense">{{ averageDailyExpense | currency:'BRL' }}</div>
+      </div>
+
+      <div class="category-averages">
+        <h4>Média Mensal por Categoria</h4>
+        <ion-list lines="none">
+          <ion-item *ngFor="let avg of categoryAverages">
+            <ion-label>{{ avg.category }}</ion-label>
+            <ion-note slot="end" color="danger">{{ avg.average | currency:'BRL' }}</ion-note>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

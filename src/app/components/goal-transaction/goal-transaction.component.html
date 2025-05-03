@@ -1,0 +1,110 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ mode === 'add' ? 'Adicionar Valor' : 'Transações da Meta' }}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="goal-info">
+    <h2>{{ goal.name }}</h2>
+    <div class="goal-progress">
+      <div class="progress-bar">
+        <div class="progress-fill" [style.width.%]="progress.percentComplete" [style.background-color]="goal.color"></div>
+      </div>
+      <div class="progress-text">
+        {{ goal.currentAmount | currency:'BRL' }} de {{ goal.targetAmount | currency:'BRL' }}
+        ({{ progress.percentComplete | number:'1.0-0' }}%)
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngIf="mode === 'add'">
+    <form (ngSubmit)="addValueToGoal()" #form="ngForm">
+      <div class="form-group">
+        <ion-label position="stacked">Valor a adicionar</ion-label>
+        <ion-input
+          [(ngModel)]="displayAmount"
+          name="amount"
+          required
+          placeholder="0,00"
+          #amountInput="ngModel"
+          class="custom-input"
+          (ionInput)="formatCurrency($event)"
+          (ionBlur)="updateAmount()"
+        >
+          <ion-icon name="cash-outline" slot="start" class="input-icon"></ion-icon>
+        </ion-input>
+        <div *ngIf="amountInput.invalid && (amountInput.dirty || amountInput.touched)" class="error-message">
+          <div *ngIf="amountInput.errors?.['required']">Valor é obrigatório</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Método</ion-label>
+        <ion-segment [(ngModel)]="addMethod" name="addMethod">
+          <ion-segment-button value="manual">
+            <ion-label>Manual</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="transaction">
+            <ion-label>Transação</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+
+      <ng-container *ngIf="addMethod === 'transaction'">
+        <div class="form-group">
+          <ion-label position="stacked">Selecione uma transação</ion-label>
+          <ion-select
+            [(ngModel)]="selectedTransactionId"
+            name="transactionId"
+            interface="action-sheet"
+            class="custom-select"
+            placeholder="Selecione uma transação"
+            [required]="addMethod === 'transaction'"
+          >
+            <ion-select-option *ngFor="let transaction of (incomeTransactions$ | async)" [value]="transaction.id">
+              {{ transaction.description }} - {{ transaction.amount | currency:'BRL' }}
+            </ion-select-option>
+          </ion-select>
+        </div>
+      </ng-container>
+
+      <ion-button expand="block" type="submit" [disabled]="form.invalid">
+        Adicionar Valor
+      </ion-button>
+    </form>
+  </ng-container>
+
+  <ng-container *ngIf="mode === 'view'">
+    <div class="transactions-list">
+      <h3>Transações Vinculadas</h3>
+
+      <ng-container *ngIf="(linkedTransactions$ | async) as transactions; else noTransactions">
+        <ion-list lines="none" *ngIf="transactions.length > 0; else noTransactions">
+          <ion-item *ngFor="let transaction of transactions" class="transaction-item">
+            <div class="transaction-info">
+              <div class="transaction-description">{{ transaction.description }}</div>
+              <div class="transaction-date">{{ transaction.date | date:'dd/MM/yyyy' }}</div>
+            </div>
+            <div class="transaction-amount">{{ transaction.amount | currency:'BRL' }}</div>
+            <ion-button fill="clear" color="danger" size="small" (click)="confirmRemoveTransaction(transaction)">
+              <ion-icon name="trash-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ng-container>
+
+      <ng-template #noTransactions>
+        <div class="no-transactions">
+          <ion-icon name="alert-circle-outline"></ion-icon>
+          <p>Nenhuma transação vinculada a esta meta</p>
+        </div>
+      </ng-template>
+    </div>
+  </ng-container>
+</ion-content>

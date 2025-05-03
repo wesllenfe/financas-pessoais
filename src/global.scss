@@ -119,7 +119,7 @@ ion-card {
   border-radius: var(--app-border-radius);
   box-shadow: var(--app-card-shadow);
   margin: 16px;
-  overflow: hidden;
+  overflow: visible;
   transition: var(--app-transition);
   background: var(--app-card-background);
 }
@@ -398,4 +398,214 @@ ion-skeleton-text {
 .dark .glass-card {
   background: rgba(31, 41, 55, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Adicionar melhorias globais para responsividade */
+
+/* Ajustes para telas pequenas */
+@media (max-width: 360px) {
+  ion-title {
+    font-size: 16px;
+  }
+
+  ion-card-title {
+    font-size: 14px;
+  }
+
+  ion-button {
+    height: 42px;
+    font-size: 14px;
+  }
+
+  ion-fab-button {
+    --size: 48px;
+  }
+
+  ion-icon {
+    font-size: 90%;
+  }
+
+  .ion-padding {
+    padding: 12px;
+  }
+}
+
+/* Melhorar alinhamento de ícones */
+ion-icon {
+  vertical-align: middle;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Garantir que os ícones nos botões estejam alinhados */
+ion-button ion-icon {
+  vertical-align: middle;
+  margin-top: -2px;
+}
+
+/* Melhorar alinhamento de ícones em itens */
+ion-item ion-icon {
+  align-self: center;
+}
+
+/* Melhorar alinhamento de ícones em chips */
+ion-chip ion-icon {
+  margin-right: 4px;
+}
+
+/* Melhorar alinhamento de ícones em botões de segmento */
+ion-segment-button ion-icon {
+  margin-bottom: 4px;
+}
+
+/* Melhorar alinhamento de ícones em botões de abas */
+ion-tab-button ion-icon {
+  margin-bottom: 2px;
+}
+
+/* Melhorar alinhamento de ícones em botões de ação */
+ion-fab-button ion-icon {
+  font-size: 24px;
+}
+
+/* Melhorar alinhamento de ícones em botões de navegação */
+ion-back-button ion-icon {
+  margin-right: 4px;
+}
+
+/* Melhorar alinhamento de ícones em botões de menu */
+ion-menu-button ion-icon {
+  font-size: 24px;
+}
+
+/* Melhorar alinhamento de ícones em botões de opções */
+ion-item-option ion-icon {
+  font-size: 18px;
+}
+
+/* Melhorar alinhamento de ícones em botões de ação */
+ion-action-sheet-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de alerta */
+ion-alert-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de modal */
+ion-modal-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de popover */
+ion-popover-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de toast */
+ion-toast-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de loading */
+ion-loading-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de picker */
+ion-picker-controller ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de refresher */
+ion-refresher-content ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de infinite scroll */
+ion-infinite-scroll-content ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de reorder */
+ion-reorder ion-icon {
+  font-size: 20px;
+}
+
+/* Melhorar alinhamento de ícones em botões de virtual scroll */
+ion-virtual-scroll ion-icon {
+  font-size: 20px;
+}
+
+/* Correção para o botão de adicionar (ícone +) */
+ion-button[slot="end"] ion-icon,
+ion-buttons[slot="end"] ion-button ion-icon {
+  color: var(--ion-color-primary);
+  margin: 0;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Correção específica para o ícone de adicionar */
+ion-icon[name="add-outline"] {
+  color: var(--ion-color-primary);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Correção para o botão de adicionar no cabeçalho */
+ion-header ion-buttons[slot="end"] ion-button {
+  --color: var(--ion-color-primary);
+  --padding-start: 8px;
+  --padding-end: 8px;
+  height: 40px;
+  width: 40px;
+}
+
+/* Correção para o botão de adicionar no cabeçalho - ícone */
+ion-header ion-buttons[slot="end"] ion-button ion-icon {
+  color: var(--ion-color-primary);
+  font-size: 24px;
+  margin: 0;
+}
+
+/* Correção para o botão FAB */
+ion-fab-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-primary-contrast);
+}
+
+ion-fab-button ion-icon {
+  color: var(--ion-color-primary-contrast);
+  font-size: 24px;
+}
+
+/* Correção para botões com ícones em geral */
+ion-button ion-icon {
+  color: inherit;
+  margin-right: 4px;
+}
+
+/* Correção para botões com ícones no slot start */
+ion-button ion-icon[slot="start"] {
+  margin-right: 8px;
+  margin-left: -4px;
+}
+
+/* Correção para botões com ícones no slot end */
+ion-button ion-icon[slot="end"] {
+  margin-left: 8px;
+  margin-right: -4px;
+}
+
+/* Correção para botões com ícones no slot icon-only */
+ion-button ion-icon[slot="icon-only"] {
+  margin: 0;
+  font-size: 1.2em;
 }

@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Orçamentos</ion-title>
+    <ion-buttons slot="end" class="add-button-container">
+      <ion-button (click)="openBudgetForm()" class="add-button">
+        <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="month-selector">
+    <ion-button fill="clear" (click)="previousMonth()">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+    </ion-button>
+    <h3>{{ selectedMonthLabel }}</h3>
+    <ion-button fill="clear" (click)="nextMonth()">
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Resumo do orçamento -->
+  <ion-card class="summary-card">
+    <ion-card-content>
+      <div class="budget-summary">
+        <div class="budget-item">
+          <div class="budget-label">Orçamento Total</div>
+          <div class="budget-value">{{ (budgetSummary$ | async)?.totalBudget | currency:'BRL' }}</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">Gasto</div>
+          <div class="budget-value">{{ (budgetSummary$ | async)?.totalSpent | currency:'BRL' }}</div>
+        </div>
+        <div class="budget-item">
+          <div class="budget-label">Restante</div>
+          <div class="budget-value" [ngClass]="{'positive': (budgetSummary$ | async)?.remainingBudget! >= 0, 'negative': (budgetSummary$ | async)?.remainingBudget! < 0}">
+            {{ (budgetSummary$ | async)?.remainingBudget | currency:'BRL' }}
+          </div>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar">
+          <div class="progress-fill" [style.width.%]="(budgetSummary$ | async)?.percentUsed"
+               [ngClass]="{'warning': (budgetSummary$ | async)?.percentUsed! > 80 && (budgetSummary$ | async)?.percentUsed! < 100,
+                          'danger': (budgetSummary$ | async)?.percentUsed! >= 100}">
+          </div>
+        </div>
+        <div class="progress-label">{{ (budgetSummary$ | async)?.percentUsed | number:'1.0-0' }}% utilizado</div>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Lista de orçamentos por categoria -->
+  <div class="budgets-list">
+    <ng-container *ngIf="(budgets$ | async) as budgets; else loading">
+      <ng-container *ngIf="budgets.length > 0; else noBudgets">
+        <ion-card *ngFor="let budget of budgets" class="budget-card" (click)="openBudgetForm(budget)">
+          <ion-card-content>
+            <div class="budget-header">
+              <div class="category-icon">
+                <ion-icon [name]="getCategoryIcon(budget.category)"></ion-icon>
+              </div>
+              <div class="budget-info">
+                <h3>{{ budget.category }}</h3>
+                <div class="budget-amounts">
+                  <span>{{ budget.spent | currency:'BRL' }}</span>
+                  <span class="separator">/</span>
+                  <span>{{ budget.amount | currency:'BRL' }}</span>
+                </div>
+              </div>
+              <div class="budget-status" [ngClass]="{'warning': getBudgetUsagePercent(budget) > 80 && getBudgetUsagePercent(budget) < 100,
+                                                   'danger': getBudgetUsagePercent(budget) >= 100,
+                                                   'success': getBudgetUsagePercent(budget) <= 80}">
+                {{ getBudgetUsagePercent(budget) | number:'1.0-0' }}%
+              </div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="getBudgetUsagePercent(budget)"
+                     [ngClass]="{'warning': getBudgetUsagePercent(budget) > 80 && getBudgetUsagePercent(budget) < 100,
+                                'danger': getBudgetUsagePercent(budget) >= 100}">
+                </div>
+              </div>
+            </div>
+            <div class="budget-alert" *ngIf="getBudgetUsagePercent(budget) >= 100">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <span>Orçamento excedido!</span>
+            </div>
+            <div class="budget-alert warning" *ngIf="getBudgetUsagePercent(budget) > 80 && getBudgetUsagePercent(budget) < 100">
+              <ion-icon name="warning-outline"></ion-icon>
+              <span>Próximo do limite!</span>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #loading>
+    <div class="skeleton-container">
+      <ion-card *ngFor="let i of [1,2,3]" class="budget-card">
+        <ion-card-content>
+          <div class="budget-header">
+            <ion-skeleton-text [animated]="true" style="width: 40px; height: 40px; border-radius: 10px;"></ion-skeleton-text>
+            <div class="budget-info" style="flex: 1;">
+              <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+            </div>
+            <ion-skeleton-text [animated]="true" style="width: 40px;"></ion-skeleton-text>
+          </div>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 8px; margin-top: 10px;"></ion-skeleton-text>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ng-template>
+
+  <ng-template #noBudgets>
+    <div class="no-data">
+      <ion-icon name="wallet-outline" size="large"></ion-icon>
+      <h3>Nenhum orçamento definido</h3>
+      <p>Defina orçamentos para controlar seus gastos por categoria</p>
+      <ion-button (click)="openBudgetForm()">
+        Adicionar Orçamento
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

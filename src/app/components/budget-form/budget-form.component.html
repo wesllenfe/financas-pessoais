@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditing ? 'Editar' : 'Novo' }} Orçamento</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <!-- Verifique se 'budget' está definido antes de renderizar o formulário -->
+  <form *ngIf="budget" (ngSubmit)="saveBudget()" #form="ngForm">
+    <div class="form-group">
+      <ion-label position="stacked">Categoria</ion-label>
+      <ion-select
+        [(ngModel)]="budget.category"
+        name="category"
+        required
+        interface="action-sheet"
+        class="custom-select"
+        placeholder="Selecione uma categoria"
+      >
+        <ion-select-option *ngFor="let category of (categories$ | async)" [value]="category">
+          {{ category }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Valor do Orçamento</ion-label>
+      <ion-input
+        [(ngModel)]="displayAmount"
+        name="amount"
+        required
+        placeholder="0,00"
+        #amountInput="ngModel"
+        class="custom-input"
+        (ionInput)="formatCurrency($event)"
+        (ionBlur)="updateAmount()"
+      >
+        <ion-icon name="cash-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+      <div *ngIf="amountInput.invalid && (amountInput.dirty || amountInput.touched)" class="error-message">
+        <div *ngIf="amountInput.errors?.['required']">Valor é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Mês</ion-label>
+      <ion-input
+        [value]="monthLabel"
+        readonly
+        class="custom-input"
+      >
+        <ion-icon name="calendar-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+    </div>
+
+    <div class="button-group">
+      <ion-button expand="block" type="submit" [disabled]="form.invalid">
+        {{ isEditing ? 'Atualizar' : 'Salvar' }}
+      </ion-button>
+
+      <ion-button *ngIf="isEditing" expand="block" color="danger" type="button" (click)="confirmDelete()">
+        Excluir
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -1,0 +1,164 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{ isEditing ? 'Editar' : 'Nova' }} Transação Recorrente</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form (ngSubmit)="saveTransaction()" #form="ngForm">
+    <div class="form-group">
+      <ion-label position="stacked">Descrição</ion-label>
+      <ion-input
+        [(ngModel)]="transaction.description"
+        name="description"
+        required
+        placeholder="Ex: Aluguel mensal"
+        #descriptionInput="ngModel"
+        class="custom-input"
+      >
+        <ion-icon name="text-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+      <div *ngIf="descriptionInput.invalid && (descriptionInput.dirty || descriptionInput.touched)" class="error-message">
+        <div *ngIf="descriptionInput.errors?.['required']">Descrição é obrigatória</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Valor</ion-label>
+      <ion-input
+        [(ngModel)]="displayAmount"
+        name="amount"
+        required
+        placeholder="0,00"
+        #amountInput="ngModel"
+        class="custom-input"
+        (ionInput)="formatCurrency($event)"
+        (ionBlur)="updateAmount()"
+      >
+        <ion-icon name="cash-outline" slot="start" class="input-icon"></ion-icon>
+      </ion-input>
+      <div *ngIf="amountInput.invalid && (amountInput.dirty || amountInput.touched)" class="error-message">
+        <div *ngIf="amountInput.errors?.['required']">Valor é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Tipo</ion-label>
+      <div class="type-selector">
+        <div
+          class="type-option"
+          [class.active]="transaction.type === 'income'"
+          (click)="transaction.type = 'income'"
+        >
+          <div class="type-icon income">
+            <ion-icon name="arrow-up-outline"></ion-icon>
+          </div>
+          <span>Entrada</span>
+        </div>
+        <div
+          class="type-option"
+          [class.active]="transaction.type === 'expense'"
+          (click)="transaction.type = 'expense'"
+        >
+          <div class="type-icon expense">
+            <ion-icon name="arrow-down-outline"></ion-icon>
+          </div>
+          <span>Saída</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Categoria</ion-label>
+      <ion-select
+        [(ngModel)]="transaction.category"
+        name="category"
+        required
+        interface="action-sheet"
+        class="custom-select"
+        placeholder="Selecione uma categoria"
+      >
+        <ion-select-option *ngFor="let category of (categories$ | async)" [value]="category">
+          {{ category }}
+        </ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-group">
+      <ion-label position="stacked">Frequência</ion-label>
+      <ion-select
+        [(ngModel)]="transaction.recurrenceType"
+        name="recurrenceType"
+        required
+        interface="action-sheet"
+        class="custom-select"
+        placeholder="Selecione a frequência"
+      >
+        <ion-select-option value="daily">Diária</ion-select-option>
+        <ion-select-option value="weekly">Semanal</ion-select-option>
+        <ion-select-option value="monthly">Mensal</ion-select-option>
+        <ion-select-option value="yearly">Anual</ion-select-option>
+      </ion-select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <ion-label position="stacked">Data de Início</ion-label>
+        <ion-datetime-button datetime="startDate" class="custom-date-button"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="startDate"
+              [(ngModel)]="transaction.startDate"
+              name="startDate"
+              presentation="date"
+              [showDefaultButtons]="true"
+              doneText="Confirmar"
+              cancelText="Cancelar"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+
+      <div class="form-group">
+        <ion-label position="stacked">Data de Término (opcional)</ion-label>
+        <ion-datetime-button datetime="endDate" class="custom-date-button"></ion-datetime-button>
+        <ion-modal [keepContentsMounted]="true">
+          <ng-template>
+            <ion-datetime
+              id="endDate"
+              [(ngModel)]="transaction.endDate"
+              name="endDate"
+              presentation="date"
+              [showDefaultButtons]="true"
+              doneText="Confirmar"
+              cancelText="Cancelar"
+            ></ion-datetime>
+          </ng-template>
+        </ion-modal>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <ion-item lines="none" class="toggle-item">
+        <ion-label>Ativo</ion-label>
+        <ion-toggle [(ngModel)]="transaction.active" name="active"></ion-toggle>
+      </ion-item>
+    </div>
+
+    <div class="button-group">
+      <ion-button expand="block" type="submit" [disabled]="form.invalid">
+        {{ isEditing ? 'Atualizar' : 'Salvar' }}
+      </ion-button>
+
+      <ion-button *ngIf="isEditing" expand="block" color="danger" type="button" (click)="confirmDelete()">
+        Excluir
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

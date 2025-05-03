@@ -1,0 +1,197 @@
+ion-content {
+  --background: var(--app-background);
+}
+
+.goal-info {
+  background: var(--app-card-background);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 20px;
+  box-shadow: var(--app-card-shadow);
+
+  @media (max-width: 360px) {
+    padding: 12px;
+    margin-bottom: 16px;
+  }
+
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 12px;
+    color: var(--app-text-color);
+
+    @media (max-width: 360px) {
+      font-size: 16px;
+      margin: 0 0 8px;
+    }
+  }
+}
+
+.goal-progress {
+  margin-bottom: 8px;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  font-size: 14px;
+  color: var(--app-text-light);
+  text-align: right;
+
+  @media (max-width: 360px) {
+    font-size: 12px;
+  }
+}
+
+form {
+  background: var(--app-card-background);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--app-card-shadow);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+ion-label {
+  color: var(--app-text-color);
+  font-weight: 500;
+  font-size: 14px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.custom-input, .custom-select {
+  --background: var(--app-card-background);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --padding-top: 14px;
+  --padding-bottom: 14px;
+  --border-radius: 12px;
+  --border-width: 1px;
+  --border-style: solid;
+  --border-color: var(--app-border-color);
+  --highlight-color-focused: var(--ion-color-primary);
+  margin-top: 4px;
+  font-size: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+}
+
+.input-icon {
+  margin-right: 8px;
+  color: var(--ion-color-primary);
+}
+
+.error-message {
+  color: var(--ion-color-danger);
+  font-size: 12px;
+  margin-top: 4px;
+  padding-left: 16px;
+}
+
+ion-button {
+  margin: 0;
+  --border-radius: 12px;
+  height: 48px;
+}
+
+.transactions-list {
+  background: var(--app-card-background);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: var(--app-card-shadow);
+
+  @media (max-width: 360px) {
+    padding: 16px;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 16px;
+    color: var(--app-text-color);
+
+    @media (max-width: 360px) {
+      font-size: 14px;
+      margin: 0 0 12px;
+    }
+  }
+}
+
+.transaction-item {
+  --background: transparent;
+  --padding-start: 0;
+  --padding-end: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--app-border-color);
+  padding-bottom: 12px;
+
+  @media (max-width: 360px) {
+    margin-bottom: 8px;
+    padding-bottom: 8px;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+}
+
+.transaction-info {
+  flex: 1;
+}
+
+.transaction-description {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--app-text-color);
+  margin-bottom: 4px;
+}
+
+.transaction-date {
+  font-size: 12px;
+  color: var(--app-text-light);
+}
+
+.transaction-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ion-color-success);
+  margin-right: 12px;
+}
+
+.no-transactions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 0;
+  text-align: center;
+
+  ion-icon {
+    font-size: 32px;
+    color: var(--app-text-light);
+    margin-bottom: 8px;
+  }
+
+  p {
+    color: var(--app-text-light);
+    font-size: 14px;
+    margin: 0;
+  }
+}

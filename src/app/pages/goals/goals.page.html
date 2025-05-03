@@ -1,0 +1,111 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/dashboard"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Metas Financeiras</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openGoalForm()">
+        <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Lista de metas -->
+  <div class="goals-list">
+    <ng-container *ngIf="(goals$ | async) as goals; else loading">
+      <ng-container *ngIf="goals.length > 0; else noGoals">
+        <ion-card *ngFor="let goal of goals" class="goal-card" (click)="openGoalForm(goal)">
+          <ion-card-content>
+            <div class="goal-header">
+              <div class="goal-icon" [style.background-color]="goal.color + '33'">
+                <ion-icon name="flag-outline" [style.color]="goal.color"></ion-icon>
+              </div>
+              <div class="goal-info">
+                <h3>{{ goal.name }}</h3>
+                <div class="goal-target">
+                  <span>Meta: {{ goal.targetAmount | currency:'BRL' }}</span>
+                </div>
+              </div>
+              <div class="goal-status" [ngClass]="{'on-track': getGoalProgress(goal).onTrack, 'off-track': !getGoalProgress(goal).onTrack}">
+                {{ getGoalProgress(goal).percentComplete | number:'1.0-0' }}%
+              </div>
+            </div>
+
+            <div class="progress-container">
+              <div class="progress-bar">
+                <div class="progress-fill" [style.width.%]="getGoalProgress(goal).percentComplete"
+                     [style.background-color]="goal.color">
+                </div>
+              </div>
+            </div>
+
+            <div class="goal-details">
+              <div class="goal-detail-item">
+                <span class="detail-label">Economizado</span>
+                <span class="detail-value">{{ goal.currentAmount | currency:'BRL' }}</span>
+              </div>
+              <div class="goal-detail-item">
+                <span class="detail-label">Restante</span>
+                <span class="detail-value">{{ getGoalProgress(goal).amountLeft | currency:'BRL' }}</span>
+              </div>
+              <div class="goal-detail-item">
+                <span class="detail-label">Prazo</span>
+                <span class="detail-value">{{ getGoalProgress(goal).daysLeft }} dias</span>
+              </div>
+            </div>
+
+            <div class="goal-actions">
+              <ion-button fill="clear" size="small" (click)="addTransaction(goal, $event)">
+                <ion-icon name="add-circle-outline" slot="start"></ion-icon>
+                Adicionar Valor
+              </ion-button>
+              <ion-button fill="clear" size="small" (click)="viewTransactions(goal, $event)">
+                <ion-icon name="list-outline" slot="start"></ion-icon>
+                Ver Transações
+              </ion-button>
+            </div>
+          </ion-card-content>
+        </ion-card>
+      </ng-container>
+    </ng-container>
+  </div>
+
+  <ng-template #loading>
+    <div class="skeleton-container">
+      <ion-card *ngFor="let i of [1,2,3]" class="goal-card">
+        <ion-card-content>
+          <div class="goal-header">
+            <ion-skeleton-text [animated]="true" style="width: 40px; height: 40px; border-radius: 10px;"></ion-skeleton-text>
+            <div class="goal-info" style="flex: 1;">
+              <ion-skeleton-text [animated]="true" style="width: 60%;"></ion-skeleton-text>
+              <ion-skeleton-text [animated]="true" style="width: 40%;"></ion-skeleton-text>
+            </div>
+            <ion-skeleton-text [animated]="true" style="width: 40px;"></ion-skeleton-text>
+          </div>
+          <ion-skeleton-text [animated]="true" style="width: 100%; height: 8px; margin-top: 10px;"></ion-skeleton-text>
+          <div class="goal-details" style="margin-top: 10px;">
+            <ion-skeleton-text [animated]="true" style="width: 100%;"></ion-skeleton-text>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ng-template>
+
+  <ng-template #noGoals>
+    <div class="no-data">
+      <ion-icon name="flag-outline" size="large"></ion-icon>
+      <h3>Nenhuma meta definida</h3>
+      <p>Defina metas para planejar suas economias</p>
+      <ion-button (click)="openGoalForm()">
+        Adicionar Meta
+      </ion-button>
+    </div>
+  </ng-template>
+</ion-content>

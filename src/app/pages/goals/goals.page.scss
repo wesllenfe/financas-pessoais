@@ -1,0 +1,202 @@
+:host {
+  --progress-height: 8px;
+  --success-color: #10B981;
+  --warning-color: #F59E0B;
+}
+
+.goals-list {
+  padding: 16px;
+
+  @media (max-width: 360px) {
+    padding: 12px;
+  }
+}
+
+.goal-card {
+  margin-bottom: 16px;
+  border-radius: 16px;
+  box-shadow: var(--app-card-shadow);
+  overflow: hidden;
+
+  @media (max-width: 360px) {
+    margin-bottom: 12px;
+  }
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  @media (max-width: 360px) {
+    margin-bottom: 10px;
+  }
+}
+
+.goal-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  margin-right: 12px;
+
+  @media (max-width: 360px) {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+  }
+
+  ion-icon {
+    font-size: 20px;
+
+    @media (max-width: 360px) {
+      font-size: 16px;
+    }
+  }
+}
+
+.goal-info {
+  flex: 1;
+
+  h3 {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    color: var(--app-text-color);
+  }
+
+  .goal-target {
+    font-size: 14px;
+    color: var(--app-text-light);
+  }
+}
+
+.goal-status {
+  font-size: 16px;
+  font-weight: 700;
+
+  &.on-track {
+    color: var(--success-color);
+  }
+
+  &.off-track {
+    color: var(--warning-color);
+  }
+}
+
+.progress-container {
+  margin-bottom: 12px;
+}
+
+.progress-bar {
+  height: var(--progress-height);
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  border-radius: var(--progress-height);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: var(--progress-height);
+  transition: width 0.3s ease;
+}
+
+.goal-details {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 8px 0;
+  border-top: 1px solid var(--app-border-color);
+  border-bottom: 1px solid var(--app-border-color);
+
+  @media (max-width: 360px) {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+}
+
+.goal-detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (max-width: 360px) {
+    flex: 1;
+    min-width: calc(33% - 8px);
+  }
+}
+
+.detail-label {
+  font-size: 12px;
+  color: var(--app-text-light);
+  margin-bottom: 4px;
+}
+
+.detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--app-text-color);
+}
+
+.goal-actions {
+  display: flex;
+  justify-content: space-between;
+
+  @media (max-width: 360px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  ion-button {
+    @media (max-width: 360px) {
+      margin: 0;
+      width: 100%;
+    }
+  }
+}
+
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 16px;
+  text-align: center;
+
+  ion-icon {
+    font-size: 48px;
+    color: var(--app-text-light);
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    color: var(--app-text-color);
+    font-size: 18px;
+    font-weight: 600;
+    margin: 0 0 8px;
+  }
+
+  p {
+    color: var(--app-text-light);
+    font-size: 14px;
+    margin: 0 0 16px;
+  }
+}
+
+.skeleton-container {
+  padding: 0 16px;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.goal-card {
+  animation: fadeIn 0.3s ease forwards;
+  animation-delay: calc(var(--animation-order) * 0.05s);
+}

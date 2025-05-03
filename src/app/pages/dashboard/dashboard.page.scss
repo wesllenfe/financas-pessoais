@@ -8,10 +8,20 @@
   gap: 12px;
   margin: 0 12px 16px;
 
+  @media (max-width: 360px) {
+    flex-direction: column;
+    gap: 8px;
+  }
+
   ion-card {
     flex: 1;
     margin: 0;
     height: var(--summary-card-height);
+
+    @media (max-width: 360px) {
+      height: auto;
+      padding: 8px 0;
+    }
 
     ion-card-header {
       padding: 12px 16px 0;
@@ -28,6 +38,11 @@
       justify-content: center;
       height: calc(var(--summary-card-height) - 50px);
 
+      @media (max-width: 360px) {
+        height: auto;
+        padding: 8px 16px;
+      }
+
       h2 {
         font-size: 20px;
         font-weight: 700;
@@ -39,6 +54,10 @@
 
 .balance-card {
   margin: 12px;
+
+  @media (max-width: 360px) {
+    margin: 8px;
+  }
 
   ion-card-header {
     padding-bottom: 0;
@@ -52,6 +71,10 @@
       font-weight: 700;
       margin: 8px 0;
       text-align: center;
+
+      @media (max-width: 360px) {
+        font-size: 24px;
+      }
     }
   }
 }
@@ -278,4 +301,55 @@ ion-fab-button {
 
 .action-buttons {
   animation: fadeInUp 1s ease forwards;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px 16px;
+
+  @media (max-width: 360px) {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 0 12px 12px;
+  }
+}
+
+.feature-card {
+  margin: 0;
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+}
+
+.feature-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.1);
+  color: var(--ion-color-primary);
+  margin-bottom: 12px;
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.feature-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--app-text-color);
+  margin-bottom: 4px;
+}
+
+.feature-description {
+  font-size: 12px;
+  color: var(--app-text-light);
 }
