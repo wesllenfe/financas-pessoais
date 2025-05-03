@@ -1,7 +1,7 @@
-import { Component, OnInit } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { FormsModule } from "@angular/forms";
-import { RouterLink, Router } from "@angular/router";
+import { Component, OnInit } from "@angular/core"
+import { CommonModule } from "@angular/common"
+import { FormsModule } from "@angular/forms"
+import { RouterLink, Router } from "@angular/router"
 import {
   IonHeader,
   IonToolbar,
@@ -27,19 +27,19 @@ import {
   IonCard,
   IonChip,
   IonBadge,
-} from "@ionic/angular/standalone";
-import { TransactionService } from "../../services/transaction.service";
-import { ToastService } from "../../services/toast.service";
-import { Transaction } from "../../models/transaction.model";
-import { TransactionItemComponent } from "../../components/transaction-item/transaction-item.component";
-import { Observable, map } from "rxjs";
-import { addOutline, alertCircleOutline, filterOutline, searchOutline } from "ionicons/icons";
-import { addIcons } from "ionicons";
+} from "@ionic/angular/standalone"
+import { TransactionService } from "../../services/transaction.service"
+import { ToastService } from "../../services/toast.service"
+import { Transaction } from "../../models/transaction.model"
+import { TransactionItemComponent } from "../../components/transaction-item/transaction-item.component"
+import { Observable, map } from "rxjs"
+import { addOutline, alertCircleOutline, filterOutline, searchOutline } from "ionicons/icons"
+import { addIcons } from "ionicons"
 
 @Component({
   selector: "app-transactions",
-  templateUrl: './transactions.page.html',
-  styleUrls: ['./transactions.page.scss'],
+  templateUrl: "./transactions.page.html",
+  styleUrls: ["./transactions.page.scss"],
   standalone: true,
   imports: [
     CommonModule,
@@ -72,10 +72,10 @@ import { addIcons } from "ionicons";
   ],
 })
 export class TransactionsPage implements OnInit {
-  transactions$!: Observable<Transaction[]>;
-  filteredTransactions$!: Observable<Transaction[]>;
-  selectedFilter: "all" | "income" | "expense" = "all";
-  searchTerm = "";
+  transactions$!: Observable<Transaction[]>
+  filteredTransactions$!: Observable<Transaction[]>
+  selectedFilter: "all" | "income" | "expense" = "all"
+  searchTerm = ""
 
   constructor(
     private transactionService: TransactionService,
@@ -87,51 +87,56 @@ export class TransactionsPage implements OnInit {
       searchOutline,
       alertCircleOutline,
       addOutline,
-      filterOutline
-    });
+      filterOutline,
+    })
   }
 
   ngOnInit() {
-    this.loadTransactions();
+    this.loadTransactions()
   }
 
   loadTransactions() {
     this.transactions$ = this.transactionService
       .getTransactions()
-      .pipe(map((transactions) => transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())));
-    this.filterTransactions();
+      .pipe(map((transactions) => transactions.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())))
+    this.filterTransactions()
+
+    // Chamar o método para animar os itens após o carregamento
+    setTimeout(() => {
+      this.animateItems()
+    }, 100)
   }
 
   filterTransactions() {
     this.filteredTransactions$ = this.transactions$.pipe(
       map((transactions) => {
         // Filter by type
-        let filtered = transactions;
+        let filtered = transactions
         if (this.selectedFilter !== "all") {
-          filtered = transactions.filter((t) => t.type === this.selectedFilter);
+          filtered = transactions.filter((t) => t.type === this.selectedFilter)
         }
 
         // Filter by search term
         if (this.searchTerm && this.searchTerm.trim() !== "") {
-          const term = this.searchTerm.toLowerCase();
+          const term = this.searchTerm.toLowerCase()
           filtered = filtered.filter(
             (t) => t.description.toLowerCase().includes(term) || t.category.toLowerCase().includes(term),
-          );
+          )
         }
 
-        return filtered;
+        return filtered
       }),
-    );
+    )
   }
 
   resetFilters() {
-    this.searchTerm = "";
-    this.selectedFilter = "all";
-    this.filterTransactions();
+    this.searchTerm = ""
+    this.selectedFilter = "all"
+    this.filterTransactions()
   }
 
   editTransaction(transaction: Transaction) {
-    this.router.navigate(["/transaction", transaction.id]);
+    this.router.navigate(["/transaction", transaction.id])
   }
 
   async confirmDelete(id: string) {
@@ -152,25 +157,40 @@ export class TransactionsPage implements OnInit {
         },
       ],
       cssClass: "custom-alert",
-    });
+    })
 
-    await alert.present();
+    await alert.present()
   }
 
   async deleteTransaction(id: string) {
     try {
-      await this.transactionService.deleteTransaction(id);
-      this.toastService.showSuccessToast("Transação excluída com sucesso");
+      await this.transactionService.deleteTransaction(id)
+      this.toastService.showSuccessToast("Transação excluída com sucesso")
     } catch (error) {
-      this.toastService.showErrorToast("Erro ao excluir transação");
-      console.error(error);
+      this.toastService.showErrorToast("Erro ao excluir transação")
+      console.error(error)
     }
   }
 
   handleRefresh(event: any) {
     setTimeout(() => {
-      this.loadTransactions();
-      event.target.complete();
-    }, 1000);
+      this.loadTransactions()
+      event.target.complete()
+    }, 1000)
+  }
+
+  // Método para animar o deslize de itens
+  animateItems() {
+    // Adicionar classe para animar itens com atraso sequencial
+    setTimeout(() => {
+      const items = document.querySelectorAll("app-transaction-item")
+      items.forEach((item, index) => {
+        setTimeout(() => {
+          item.classList.add("item-animated")
+        }, index * 50)
+      })
+    }, 300)
   }
 }
+
+export default TransactionsPage

@@ -63,6 +63,12 @@
   --app-text-color: #111827;
   --app-text-light: #6B7280;
   --app-border-color: #E5E7EB;
+
+  /* Melhorias nas animações e transições */
+  --animation-speed-slow: 0.5s;
+  --animation-speed-medium: 0.3s;
+  --animation-speed-fast: 0.2s;
+  --animation-curve: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Modo escuro */
@@ -94,8 +100,15 @@ body {
   color: var(--app-text-color);
 }
 
+/* Melhorias nas transições de página */
 ion-content {
   --background: var(--app-background);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 /* Headers */
@@ -114,14 +127,41 @@ ion-title {
   letter-spacing: -0.01em;
 }
 
+/* Animações para elementos de lista */
+ion-item, ion-card, ion-button {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+/* Animações para deslize de itens */
+ion-item-sliding {
+  transition: transform var(--animation-speed-medium) var(--animation-curve);
+  will-change: transform;
+}
+
+ion-item-options {
+  transition: opacity var(--animation-speed-medium) var(--animation-curve),
+              visibility var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-item-option {
+  transition: transform var(--animation-speed-medium) var(--animation-curve),
+              background-color var(--animation-speed-fast) var(--animation-curve);
+}
+
 /* Cards */
 ion-card {
   border-radius: var(--app-border-radius);
   box-shadow: var(--app-card-shadow);
   margin: 16px;
   overflow: visible;
-  transition: var(--app-transition);
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+  will-change: transform, box-shadow;
   background: var(--app-card-background);
+}
+
+ion-card:active {
+  transform: scale(0.98);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 ion-card-header {
@@ -137,6 +177,47 @@ ion-card-title {
 
 ion-card-content {
   padding: 10px 20px 20px;
+}
+
+/* Animações para botões */
+ion-button, ion-fab-button {
+  overflow: hidden;
+  position: relative;
+  transition: all var(--animation-speed-fast) var(--animation-curve);
+}
+
+ion-button:active, ion-fab-button:active {
+  transform: scale(0.97);
+}
+
+/* Efeito de ripple personalizado para botões */
+ion-button::after, ion-fab-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+ion-button:active::after, ion-fab-button:active::after {
+  animation: ripple 0.6s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0, 0) translate(-50%, -50%);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(20, 20) translate(-50%, -50%);
+    opacity: 0;
+  }
 }
 
 /* Botões */
@@ -234,8 +315,42 @@ ion-searchbar {
   --icon-color: var(--ion-color-primary);
 }
 
+/* Animações para inputs */
+ion-input, ion-select, ion-textarea, ion-searchbar {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-input:focus, ion-select:focus, ion-textarea:focus, ion-searchbar:focus {
+  transform: translateY(-2px);
+}
+
 ion-segment {
   padding: 0 16px 8px;
+}
+
+/* Animações para segmentos */
+ion-segment-button {
+  overflow: hidden;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-segment-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(var(--ion-color-primary-rgb), 0.1);
+  opacity: 0;
+  transform: scale(0);
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+  border-radius: inherit;
+}
+
+ion-segment-button:active::before {
+  opacity: 1;
+  transform: scale(1);
 }
 
 ion-segment-button {
@@ -294,9 +409,25 @@ ion-label {
 }
 
 /* Animações e transições */
-@keyframes fadeIn {
+/*@keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
+}*/
+
+/* Correção para o bug de deslize */
+.item-sliding-active-slide ion-item {
+  position: relative;
+  transition: transform var(--animation-speed-medium) var(--animation-curve);
+  will-change: transform;
+}
+
+.item-sliding-active-slide ion-item-options {
+  display: flex;
+  visibility: visible !important;
+}
+
+.item-sliding-active-slide ion-item-option {
+  transform: translateX(0) !important;
 }
 
 ion-card, ion-item {
@@ -318,10 +449,46 @@ ion-card, ion-item {
   font-weight: 500;
 }
 
+/* Melhorias nas animações de toast */
+ion-toast {
+  --border-radius: 16px;
+  --box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: slideUp 0.3s var(--animation-curve);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
 /* FAB Button */
+ion-fab {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
 ion-fab-button {
   --border-radius: 16px;
   --box-shadow: 0 10px 15px -3px rgba(var(--ion-color-primary-rgb), 0.3), 0 4px 6px -2px rgba(var(--ion-color-primary-rgb), 0.1);
+  overflow: hidden;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-fab-button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 0;
+  border-radius: 100%;
+  transform: scale(1, 1) translate(-50%, -50%);
+  transform-origin: 50% 50%;
+}
+
+ion-fab-button:active::after {
+  animation: ripple 0.6s ease-out;
 }
 
 /* Alertas personalizados */
@@ -331,6 +498,49 @@ ion-fab-button {
 
 .custom-alert .alert-wrapper {
   border-radius: 16px;
+}
+
+/* Melhorias nas animações de modal */
+ion-modal {
+  --backdrop-opacity: 0.3;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal .ion-page {
+  animation: modalEnter 0.4s var(--animation-curve);
+}
+
+@keyframes modalEnter {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Melhorias nas animações de alerta */
+ion-alert {
+  --backdrop-opacity: 0.3;
+}
+
+ion-alert .alert-wrapper {
+  animation: alertEnter 0.3s var(--animation-curve);
+}
+
+@keyframes alertEnter {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Melhorias nas animações de loading */
+ion-loading {
+  --backdrop-opacity: 0.3;
+}
+
+ion-loading .loading-wrapper {
+  animation: loadingEnter 0.3s var(--animation-curve);
+}
+
+@keyframes loadingEnter {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
 /* Skeleton */
@@ -464,9 +674,38 @@ ion-tab-button ion-icon {
   margin-bottom: 2px;
 }
 
+/* Melhorias nas animações de refresher */
+ion-refresher-content {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+/* Melhorias nas animações de infinite scroll */
+ion-infinite-scroll-content {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+/* Melhorias nas animações de reorder */
+ion-reorder {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+/* Melhorias nas animações de virtual scroll */
+ion-virtual-scroll {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
 /* Melhorar alinhamento de ícones em botões de ação */
 ion-fab-button ion-icon {
   font-size: 24px;
+}
+
+/* Correção para o bug de deslize em dispositivos iOS */
+.ios ion-item-sliding {
+  overflow: visible;
+}
+
+.ios ion-item-options {
+  transition: transform var(--animation-speed-medium) var(--animation-curve);
 }
 
 /* Melhorar alinhamento de ícones em botões de navegação */

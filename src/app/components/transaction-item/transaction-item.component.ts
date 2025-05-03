@@ -1,5 +1,5 @@
-import { Component, Input, Output, EventEmitter } from "@angular/core";
-import { Transaction } from "../../models/transaction.model";
+import { Component, Input, Output, EventEmitter, ElementRef, AfterViewInit } from "@angular/core"
+import { Transaction } from "../../models/transaction.model"
 import {
   IonItem,
   IonLabel,
@@ -10,10 +10,10 @@ import {
   IonItemOption,
   IonAvatar,
   IonChip,
-  IonButton
-} from "@ionic/angular/standalone";
-import { RouterLink } from "@angular/router";
-import { DatePipe, CurrencyPipe, NgClass } from "@angular/common";
+  IonButton,
+} from "@ionic/angular/standalone"
+import { RouterLink } from "@angular/router"
+import { DatePipe, CurrencyPipe, NgClass } from "@angular/common"
 import {
   pencilOutline,
   trashOutline,
@@ -26,13 +26,13 @@ import {
   fastFoodOutline,
   carOutline,
   cashOutline,
-} from "ionicons/icons";
-import { addIcons } from "ionicons";
+} from "ionicons/icons"
+import { addIcons } from "ionicons"
 
 @Component({
   selector: "app-transaction-item",
-  templateUrl: './transaction-item.component.html',
-  styleUrls: ['./transaction-item.component.scss'],
+  templateUrl: "./transaction-item.component.html",
+  styleUrls: ["./transaction-item.component.scss"],
   standalone: true,
   imports: [
     IonItem,
@@ -51,12 +51,12 @@ import { addIcons } from "ionicons";
     NgClass,
   ],
 })
-export class TransactionItemComponent {
-  @Input() transaction!: Transaction;
-  @Output() edit = new EventEmitter<Transaction>();
-  @Output() delete = new EventEmitter<string>();
+export class TransactionItemComponent implements AfterViewInit {
+  @Input() transaction!: Transaction
+  @Output() edit = new EventEmitter<Transaction>()
+  @Output() delete = new EventEmitter<string>()
 
-  constructor() {
+  constructor(private elementRef: ElementRef) {
     addIcons({
       "pencil-outline": pencilOutline,
       "trash-outline": trashOutline,
@@ -69,7 +69,25 @@ export class TransactionItemComponent {
       "fast-food-outline": fastFoodOutline,
       "car-outline": carOutline,
       "cash-outline": cashOutline,
-    });
+    })
+  }
+
+  ngAfterViewInit() {
+    // Adicionar classe para animação de entrada
+    setTimeout(() => {
+      const hostElement = this.elementRef.nativeElement
+      hostElement.classList.add("item-animated")
+    }, 100)
+  }
+
+  onSlideStart(event: any) {
+    const hostElement = this.elementRef.nativeElement
+    hostElement.classList.add("sliding-active")
+  }
+
+  onSlideEnd(event: any) {
+    const hostElement = this.elementRef.nativeElement
+    hostElement.classList.remove("sliding-active")
   }
 
   getCategoryIcon(category: string): string {
@@ -83,8 +101,8 @@ export class TransactionItemComponent {
       Salário: "cash-outline",
       Investimentos: "card-outline",
       Outros: "cart-outline",
-    };
+    }
 
-    return categoryIcons[category] || "cart-outline";
+    return categoryIcons[category] || "cart-outline"
   }
 }

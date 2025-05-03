@@ -1,4 +1,4 @@
-<ion-item-sliding #slidingItem>
+<ion-item-sliding #slidingItem class="transaction-sliding-item" (ionDrag)="onSlideStart($event)" (ionSlidingEnd)="onSlideEnd($event)">
   <ion-item [routerLink]="['/transaction', transaction.id]" detail="false" class="transaction-item">
     <div class="category-icon" [ngClass]="transaction.type">
       <ion-icon [name]="getCategoryIcon(transaction.category)"></ion-icon>

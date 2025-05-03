@@ -200,3 +200,161 @@ ion-label {
 .form-card {
   animation: fadeInUp 0.4s ease forwards;
 }
+
+/* Adicionar estas regras ao final do arquivo */
+
+/* Animações para a lista de transações */
+app-transaction-item {
+  display: block;
+  animation: fadeInUp 0.4s var(--animation-curve);
+  animation-fill-mode: both;
+}
+
+app-transaction-item:nth-child(1) { animation-delay: 0.05s; }
+app-transaction-item:nth-child(2) { animation-delay: 0.1s; }
+app-transaction-item:nth-child(3) { animation-delay: 0.15s; }
+app-transaction-item:nth-child(4) { animation-delay: 0.2s; }
+app-transaction-item:nth-child(5) { animation-delay: 0.25s; }
+app-transaction-item:nth-child(6) { animation-delay: 0.3s; }
+app-transaction-item:nth-child(7) { animation-delay: 0.35s; }
+app-transaction-item:nth-child(8) { animation-delay: 0.4s; }
+app-transaction-item:nth-child(9) { animation-delay: 0.45s; }
+app-transaction-item:nth-child(10) { animation-delay: 0.5s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Melhorias na barra de pesquisa */
+.search-filter-container {
+  background: var(--app-background);
+  padding: 0 16px 16px;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+.custom-searchbar {
+  --border-radius: 12px;
+  --background: var(--app-card-background);
+  --color: var(--app-text-color);
+  --placeholder-color: var(--app-text-light);
+  --icon-color: var(--ion-color-primary);
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+.custom-searchbar:focus-within {
+  --box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Melhorias no segmento de filtro */
+.custom-segment {
+  background: var(--app-card-background);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-segment-button {
+  --color: var(--app-text-light);
+  --color-checked: var(--ion-color-primary);
+  --indicator-color: transparent;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+  position: relative;
+  overflow: hidden;
+}
+
+ion-segment-button::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--ion-color-primary);
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+  transform: translateX(-50%);
+}
+
+ion-segment-button.segment-button-checked::after {
+  width: 80%;
+}
+
+/* Melhorias no card de transações */
+.transactions-card {
+  border-radius: 16px;
+  margin: 0 16px 16px;
+  box-shadow: var(--app-card-shadow);
+  overflow: hidden;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+.transaction-count {
+  padding: 12px 16px 4px;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-chip {
+  --background: rgba(var(--ion-color-primary-rgb), 0.1);
+  --color: var(--ion-color-primary);
+  font-size: 12px;
+  height: 24px;
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+/* Melhorias no estado vazio */
+.no-data {
+  padding: 40px 20px;
+  text-align: center;
+  animation: fadeIn 0.5s var(--animation-curve);
+}
+
+.no-data ion-icon {
+  font-size: 48px;
+  color: var(--app-text-light);
+  margin-bottom: 16px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 0.8; }
+}
+
+.no-data h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--app-text-color);
+  margin-bottom: 8px;
+}
+
+.no-data p {
+  font-size: 14px;
+  color: var(--app-text-light);
+  margin-bottom: 20px;
+}
+
+/* Melhorias no botão FAB */
+ion-fab {
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-fab-button {
+  --background: var(--ion-color-primary);
+  --box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb), 0.4);
+  transition: all var(--animation-speed-medium) var(--animation-curve);
+}
+
+ion-fab-button:hover {
+  --box-shadow: 0 6px 20px rgba(var(--ion-color-primary-rgb), 0.5);
+  transform: translateY(-2px);
+}

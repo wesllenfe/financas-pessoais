@@ -1,108 +1,118 @@
-/* Corrigir alinhamento de ícones e melhorar responsividade */
+/* Substituir todo o conteúdo do arquivo por este CSS melhorado */
 :host {
   display: block;
   margin-bottom: 8px;
 }
 
-/* Modificar o estilo do ion-item-sliding para garantir que os botões apareçam corretamente */
 ion-item-sliding {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: var(--app-card-shadow);
   margin-bottom: 8px;
+  transition: transform 0.3s ease;
+  will-change: transform;
 
-  ion-item {
-    --padding-start: 16px;
-    --padding-end: 16px;
-    --inner-padding-end: 0;
-    --background: var(--app-card-background);
-    --border-style: none;
+  &.item-sliding-active-slide {
+    z-index: 10;
+    position: relative;
 
-    ion-label {
-      h2 {
-        font-size: 16px;
-        font-weight: 500;
-        color: var(--app-text-color);
-        margin-bottom: 4px;
-
-        @media (max-width: 360px) {
-          font-size: 14px;
-        }
-      }
-
-      p {
-        font-size: 14px;
-        color: var(--app-text-light);
-        margin: 2px 0;
-
-        @media (max-width: 360px) {
-          font-size: 12px;
-        }
-      }
+    ion-item {
+      --background: var(--app-card-background);
     }
 
-    ion-note {
+    ion-item-options {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+}
+
+ion-item {
+  --padding-start: 16px;
+  --padding-end: 16px;
+  --inner-padding-end: 0;
+  --background: var(--app-card-background);
+  --border-style: none;
+  transition: all 0.3s ease;
+
+  ion-label {
+    h2 {
       font-size: 16px;
-      font-weight: 600;
-      padding: 0 8px;
-
-      &[color="success"] {
-        color: var(--ion-color-success);
-      }
-
-      &[color="danger"] {
-        color: var(--ion-color-danger);
-      }
+      font-weight: 500;
+      color: var(--app-text-color);
+      margin-bottom: 4px;
 
       @media (max-width: 360px) {
         font-size: 14px;
-        padding: 0 4px;
       }
     }
   }
 
-  ion-item-options {
-    ion-item-option {
-      --border-radius: 0;
-      min-width: 70px;
+  ion-note {
+    font-size: 16px;
+    font-weight: 600;
+    padding: 0 8px;
+    transition: all 0.3s ease;
+
+    &[color="success"] {
+      color: var(--ion-color-success);
+    }
+
+    &[color="danger"] {
+      color: var(--ion-color-danger);
+    }
+
+    @media (max-width: 360px) {
+      font-size: 14px;
+      padding: 0 4px;
+    }
+  }
+}
+
+ion-item-options {
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+
+  ion-item-option {
+    --border-radius: 0;
+    min-width: 70px;
+    transition: all 0.2s ease;
+    transform: translateX(100%);
+
+    &.item-option-active {
+      transform: translateX(0);
+    }
+
+    @media (max-width: 360px) {
+      min-width: 60px;
+    }
+
+    &[color="primary"] {
+      --background: var(--ion-color-primary);
+      --color: var(--ion-color-primary-contrast);
+    }
+
+    &[color="danger"] {
+      --background: var(--ion-color-danger);
+      --color: var(--ion-color-danger-contrast);
+    }
+
+    ion-icon {
+      font-size: 20px;
+      transition: transform 0.2s ease;
 
       @media (max-width: 360px) {
-        min-width: 60px;
+        font-size: 18px;
       }
+    }
 
-      &[color="primary"] {
-        --background: var(--ion-color-primary);
-        --color: var(--ion-color-primary-contrast);
-      }
-
-      &[color="danger"] {
-        --background: var(--ion-color-danger);
-        --color: var(--ion-color-danger-contrast);
-      }
-
-      ion-icon {
-        font-size: 20px;
-
-        @media (max-width: 360px) {
-          font-size: 18px;
-        }
-      }
+    &:active ion-icon {
+      transform: scale(1.2);
     }
   }
 }
 
-/* Garantir que o item deslizante tenha um z-index adequado */
-ion-item-sliding.item-sliding-active-slide {
-  z-index: 10;
-  position: relative;
-}
-
-/* Garantir que as opções de item tenham um z-index maior */
-ion-item-options {
-  z-index: 11;
-}
-
-/* Resto do CSS permanece o mesmo */
 .transaction-item {
   --padding-start: 16px;
   --padding-end: 16px;
@@ -122,6 +132,7 @@ ion-item-options {
   margin-right: 16px;
   background-color: rgba(var(--ion-color-primary-rgb), 0.1);
   color: var(--ion-color-primary);
+  transition: all 0.3s ease;
 
   @media (max-width: 360px) {
     width: 32px;
@@ -141,6 +152,7 @@ ion-item-options {
 
   ion-icon {
     font-size: 20px;
+    transition: transform 0.2s ease;
 
     @media (max-width: 360px) {
       font-size: 16px;
@@ -156,6 +168,7 @@ ion-label h2 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: all 0.2s ease;
 
   @media (max-width: 360px) {
     font-size: 14px;
@@ -176,6 +189,7 @@ ion-label h2 {
   margin: 0 8px 0 0;
   --background: rgba(var(--ion-color-primary-rgb), 0.1);
   --color: var(--ion-color-primary);
+  transition: all 0.2s ease;
 
   @media (max-width: 360px) {
     height: 18px;
@@ -188,6 +202,7 @@ ion-label h2 {
 .transaction-date {
   font-size: 12px;
   color: var(--app-text-light);
+  transition: all 0.2s ease;
 
   @media (max-width: 360px) {
     font-size: 11px;
@@ -198,33 +213,61 @@ ion-label h2 {
   font-size: 16px;
   font-weight: 700;
   white-space: nowrap;
+  transition: all 0.2s ease;
 
   @media (max-width: 360px) {
     font-size: 14px;
   }
 }
 
-ion-item-options {
-  border-bottom: 1px solid var(--app-border-color);
+/* Animações melhoradas */
+@keyframes slideIn {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
 }
 
-ion-item-option {
-  --padding-start: 16px;
-  --padding-end: 16px;
-
-  @media (max-width: 360px) {
-    --padding-start: 12px;
-    --padding-end: 12px;
-  }
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-/* Animação ao deslizar */
 @keyframes pulse {
   0% { transform: scale(1); }
   50% { transform: scale(1.05); }
   100% { transform: scale(1); }
 }
 
+ion-item-option {
+  animation: slideIn 0.3s ease forwards;
+}
+
 ion-item-option:active {
   animation: pulse 0.3s ease;
+}
+
+/* Efeito de hover para melhorar feedback visual */
+ion-item:hover {
+  --background: rgba(var(--ion-color-primary-rgb), 0.03);
+}
+
+ion-item-option:hover ion-icon {
+  transform: scale(1.1);
+}
+
+/* Efeito de ripple personalizado */
+ion-item-sliding::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(var(--ion-color-primary-rgb), 0.1) 0%, rgba(var(--ion-color-primary-rgb), 0) 70%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+ion-item-sliding:active::after {
+  opacity: 1;
 }
